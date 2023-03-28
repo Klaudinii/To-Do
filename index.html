@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>To Do Lists</title>
+    <title>To Do List</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
@@ -22,11 +22,34 @@
         var li = document.createElement("li");
         li.innerHTML = taskText + " <span class='task-date'>" + dateString + "</span><button class='remove' onclick='removeTask(this.parentNode)'>Remove</button>";
         taskList.appendChild(li);
+
+        // Save task to local storage
+        var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        var newTask = { text: taskText, date: dateString };
+        tasks.push(newTask);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
       }
 
       function removeTask(task) {
         task.parentNode.removeChild(task);
+
+        // Remove task from local storage
+        var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks = tasks.filter(function(item) {
+          return item.text !== task.firstChild.textContent.trim();
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
       }
+
+      // Load tasks from local storage
+      window.addEventListener("load", function() {
+        var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.forEach(function(task) {
+          var li = document.createElement("li");
+          li.innerHTML = task.text + " <span class='task-date'>" + task.date + "</span><button class='remove' onclick='removeTask(this.parentNode)'>Remove</button>";
+          document.getElementById("taskList").appendChild(li);
+        });
+      });
     </script>
   </body>
 </html>
