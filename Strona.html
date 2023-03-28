@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To Do List</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h1>To Do List</h1>
+    <form>
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button type="button" onclick="addTask()">Add</button>
+    </form>
+    <ul id="taskList"></ul>
+    <script>
+      function addTask() {
+        var taskInput = document.getElementById("taskInput");
+        var taskList = document.getElementById("taskList");
+        var taskText = taskInput.value;
+        taskInput.value = "";
+        var currentDate = new Date();
+        var dateString = currentDate.toLocaleString();
+        var li = document.createElement("li");
+        li.innerHTML = taskText + " <span class='task-date'>" + dateString + "</span><button class='remove' onclick='removeTask(this.parentNode)'>Remove</button>";
+        taskList.appendChild(li);
+      }
+
+      function removeTask(task) {
+        task.parentNode.removeChild(task);
+      }
+    </script>
+  </body>
+</html>
