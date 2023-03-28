@@ -12,34 +12,21 @@
     </form>
     <ul id="taskList"></ul>
     <script>
-          function addTask() {
-      var taskInput = document.getElementById("taskInput");
-      var taskList = document.getElementById("taskList");
-      var taskText = taskInput.value;
-      taskInput.value = "";
-      var currentDate = new Date();
-      var dateString = currentDate.toLocaleString();
-      var li = document.createElement("li");
-      li.innerHTML = taskText + " <span class='task-date'>" + dateString + "</span><button class='remove' onclick='removeTask(this.parentNode)'>Remove</button>";
-      taskList.appendChild(li);
-
-      // Save task to local storage
-      var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-      var newTask = { text: taskText, date: dateString };
-      tasks.push(newTask);
-      localStorage.setItem("tasks", JSON.stringify(tasks));
+      function addTask() {
+        var taskInput = document.getElementById("taskInput");
+        var taskList = document.getElementById("taskList");
+        var taskText = taskInput.value;
+        taskInput.value = "";
+        var currentDate = new Date();
+        var dateString = currentDate.toLocaleString();
+        var li = document.createElement("li");
+        li.innerHTML = taskText + " <span class='task-date'>" + dateString + "</span><button class='remove' onclick='removeTask(this.parentNode)'>Remove</button>";
+        taskList.appendChild(li);
       }
 
       function removeTask(task) {
-  task.parentNode.removeChild(task);
-
-  // Remove task from local storage
-  var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks = tasks.filter(function(item) {
-    return item.text !== task.firstChild.textContent.trim();
-  });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+        task.parentNode.removeChild(task);
+      }
     </script>
   </body>
 </html>
